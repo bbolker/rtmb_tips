@@ -7,7 +7,7 @@ tips for (new) RTMB users
 * have to implement exotic probability distributions yourself: anything that descends into C(++)/Fortran code will probably fails
 * use of `<-[` (see [here](https://groups.google.com/g/tmb-users/c/HlPqkfcCa1g)) etc.
    * specifically, if you use the `c()` function, or if you use the `diag<-` function (which sets the diagonal of a matrix) or the `[<-` function (which assigns values within a matrix), you need to add e.g. `ADoverload("[<-")` to the beginning of your function
-* you probably can't "grow" vectors (as in `x <- c(); x[1] <- 2`), see [here](https://groups.google.com/g/tmb-users/c/-MyEk1m0lBo); instead, preallocate the vector (probably better practice anyway?)
+* You can only "grow" "empty" vectors if initialized with `numeric(0)` not `c()` (i.e. `x <- c(); x[1] <- 2` throws an error, but `x <- numeric(0); x[1] <- 2` does work), see [here](https://groups.google.com/g/tmb-users/c/-MyEk1m0lBo); It is (probably) better practice to avoid "growing" vectors and preallocate instead i.e. `x <- numeric(1); x[1] <- 2`.
 * for matrix exponentials, you should use `Matrix::expm()` rather than `expm::expm()`
 * RTMB is pickier than R about matrix types. You may need to use some combination of `drop()` and `as.matrix()` to convert matrices with dimension 1 in some direction (or `Matrix` matrices) back to vectors
 * `[[`-indexing may be much faster than `[`-indexing: see [here](https://groups.google.com/g/tmb-users/c/rm2N5mH8U-8/m/l1sYZov3EAAJ) (and later messages in that thread)
