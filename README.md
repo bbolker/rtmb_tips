@@ -3,7 +3,7 @@ tips for (new) RTMB users
 
 ## requirements for RTMB functions
 
-* objective function **must be differentiable** with respect to parameters (no `if()`, `abs()`, `round()`, `min()`, `max()` depending on parameters)
+* the objective function **must be differentiable** with respect to parameters (no `if()`, `abs()`, `round()`, `min()`, `max()` depending on parameters)
 * have to implement exotic probability distributions yourself: anything that descends into C(++)/Fortran code will probably fail
 * aliases to base functions made before call to `library(RTMB)` [might not work](https://github.com/kaskr/RTMB/issues/69)
 * use of `<-[` (see [here](https://groups.google.com/g/tmb-users/c/HlPqkfcCa1g)) etc.
@@ -29,6 +29,6 @@ Unit: microseconds
       forloop 223.0 240.1 245.0  244.2 248.7  382 10000   c
  forloop_RTMB  12.6  13.5  15.7   13.9  14.8 3835 10000  b 
 ```
-* data handling (see [here](https://groups.google.com/g/tmb-users/c/sq3y5aTwvjo), [here](https://groups.google.com/g/tmb-users/c/YzSjsHyFYJ8)) (and very similar arguments from 2004 about [MLE fitting machinery taking a `data` argument](https://hypatia.math.ethz.ch/pipermail/r-devel/2004-June/029837.html)
-* have to handle prediction, tests, diagnostics, etc. etc. yourself
+* data handling (see [here](https://groups.google.com/g/tmb-users/c/sq3y5aTwvjo), [here](https://groups.google.com/g/tmb-users/c/YzSjsHyFYJ8)) (and very similar arguments from 2004 about [MLE fitting machinery taking a `data` argument](https://hypatia.math.ethz.ch/pipermail/r-devel/2004-June/029837.html))
+* have to handle prediction, tests, diagnostics, etc. etc. yourself (although the `broom.mixed` package does have a [rudimentary `tidy` method for TMB objects](https://github.com/bbolker/broom.mixed/blob/main/R/TMB_tidiers.R) (e.g. `class(TMBobj) <- c("TMB", class(TMBobj)); broom.mixed::tidy(TMBobj)`)
 * if you do something clever where you define your objective function in a different environment from where you call `MakeADFun`, you can use `assign(..., environment(objective_function))` to make sure that the objective function can see any objects it needs to know about ...
